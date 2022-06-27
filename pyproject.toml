@@ -9,6 +9,8 @@ python = ">=3.9 <3.10"
 mlflow = "1.26.1"
 scikit-learn = "1.1.1"
 pandas = "1.4.3"
+fastapi = "^0.78.0"
+uvicorn = {extras = ["standard"], version = "^0.18.2"}
 
 [tool.poetry.dev-dependencies]
 black = "22.3.0"
