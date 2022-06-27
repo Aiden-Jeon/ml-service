@@ -1,0 +1,15 @@
+artifact_uri: /Users/aiden/workspace/side-project/ml-service/mlruns/0/d114d38d56f14369830e0d722f5189df/artifacts
+end_time: 1656305720746
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: d114d38d56f14369830e0d722f5189df
+run_uuid: d114d38d56f14369830e0d722f5189df
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1656305720692
+status: 3
+tags: []
+user_id: aiden
