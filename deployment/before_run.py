@@ -1,4 +1,4 @@
 from engine.controller import ModelEngine
 
 engine = ModelEngine("./", "model")
-engine.load_schema()
+engine.load_schema("./engine")
