@@ -5,7 +5,7 @@ from .service import ModelService
 
 router = APIRouter()
 
-model = ModelService("./", "model")
+model = ModelService()
 
 
 @router.post("/inference/{predict_method}")

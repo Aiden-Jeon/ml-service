@@ -42,9 +42,10 @@ class ModelOutputSchema(BaseModel):
         return contents
 
 
-class SchemaGeneartor:
-    def __init__(self, artifact_path: str, model_name: str) -> None:
-        self.artifact_path = Path(artifact_path) / model_name
+class SchemaGenerator:
+    def __init__(self, artifact_path: str) -> None:
+        self.engine_path = Path(__file__).parent / "engine"
+        self.artifact_path = Path(artifact_path)
         self.ml_model = ...
         self.input_example = ...
 
@@ -56,7 +57,7 @@ class SchemaGeneartor:
         with open(self.artifact_path / "MLmodel", "r") as f:
             self.ml_model = yaml.safe_load(f)
 
-    def _make_pydantic(self, path: str) -> None:
+    def _make_pydantic(self) -> None:
         input_schemas = self.ml_model["signature"]["inputs"]
         input_schemas = yaml.full_load(input_schemas)
 
@@ -66,17 +67,11 @@ class SchemaGeneartor:
             data_type = input_schema["type"]
             template.add(name, data_type)
 
-        with open(Path(path) / "schema.py", "w") as f:
+        with open(self.engine_path / "schema.py", "w") as f:
             print(template.dump())
             f.write(template.dump())
             f.write("\n")
 
-    def load_schema(self, path) -> None:
+    def load_schema(self) -> None:
         self._load_ml_model()
-        self._make_pydantic(path)
-
-
-
-root = Path(__file__).parent
-generator = SchemaGeneartor("./", "model")
-generator.load_schema(root / "engine")
+        self._make_pydantic()

@@ -1,14 +1,18 @@
+import os
 from pathlib import Path
 
 import cloudpickle
 import pandas as pd
 
-from .schema import ModelInputSchema
+from ml_service.deployment.engine.schema import ModelInputSchema
+from ml_service.deployment.settings import settings
+
+MODEL_ARTIFACT_PATH = os.getenv("MODEL_ARTIFACT_PATH")
 
 
 class ModelService:
-    def __init__(self, artifact_path: str, model_name: str) -> None:
-        self.artifact_path = Path(artifact_path) / model_name
+    def __init__(self) -> None:
+        self.artifact_path = Path(settings.MODEL_ARTIFACT_PATH)
         self._model = ...
         self._load_model()
 
