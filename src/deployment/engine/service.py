@@ -17,7 +17,7 @@ class ModelService:
             self._model = cloudpickle.load(f)
 
     def infer_schema(self, inputs: ModelInputSchema) -> pd.DataFrame:
-        raw = {key: [value] for key, value in inputs.dict().items()}
+        raw = {key: value for key, value in inputs.dict().items()}
         df = pd.DataFrame.from_dict(raw, orient="columns")
         return df
 

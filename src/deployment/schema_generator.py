@@ -5,7 +5,8 @@ import yaml
 
 class InputPydanticTemplate:
     def __init__(self) -> None:
-        self.header = """from pydantic import BaseModel, Field
+        self.header = """from typing import List
+from pydantic import BaseModel, Field
 
 
 class ModelInputSchema(BaseModel):
@@ -14,7 +15,7 @@ class ModelInputSchema(BaseModel):
 
     def add(self, name: str, data_type: str) -> None:
         data_type = "float" if data_type == "double" else data_type
-        self.contents += [f"    {name}: {data_type}"]
+        self.contents += [f"    {name}: List[{data_type}]"]
 
     def dump(self):
         contents = [self.header] + self.contents.copy()
@@ -75,5 +76,7 @@ class SchemaGeneartor:
         self._make_pydantic(path)
 
 
+
+root = Path(__file__).parent
 generator = SchemaGeneartor("./", "model")
-generator.load_schema("./engine")
+generator.load_schema(root / "engine")
