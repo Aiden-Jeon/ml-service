@@ -1,3 +1,4 @@
+from datetime import datetime
 import pandas as pd
 
 from ml_service.deployment.buffer.schema import InferenceIn
@@ -17,8 +18,9 @@ class BufferService:
         return df
 
     def inference(self, predict_method: str, inputs: InferenceIn):
+        timestamp = datetime.utcnow()
         df = self.infer_schema(inputs)
-        self._buffer_repo.add_input(inputs)
+        self._buffer_repo.add_input(inputs, timestamp=timestamp)
 
         result = getattr(self._engine, predict_method)(df)
         result_df = pd.DataFrame(result)

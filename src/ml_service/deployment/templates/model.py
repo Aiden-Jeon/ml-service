@@ -19,7 +19,7 @@ from sqlalchemy import Column, DateTime, Float, Integer, String, Text
 
 class DataIn:
     __tablename__ = "input"
-    created_at = Column(DateTime, default=datetime.utcnow)
+    timestamp = Column(DateTime, default=datetime.utcnow)
 
 """
         self.contents = []
@@ -43,7 +43,7 @@ from sqlalchemy import Column, DateTime, Float, Integer, String, Text
 
 class DataOut:
     __tablename__ = "output"
-    created_at = Column(DateTime, default=datetime.utcnow)
+    timestamp = Column(DateTime, default=datetime.utcnow)
 
 """
 

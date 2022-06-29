@@ -16,26 +16,14 @@ class BufferRepository:
     def add_input(
         self,
         inputs: Dict[str, Any],
-        created_at: Optional[datetime] = None,
+        timestamp: Optional[datetime],
     ) -> DataIn:
-        """
-        Parameters
-        ----------
-        user_id : int
-        project_id : int
-        api_pipeline : ApiPipeline
-        created_at : datetime, optional
-
-        Returns
-        -------
-        TrainingPipeline
-        """
         if not self.ready:
             raise NotImplementedError("db is not ready")
 
         inputs = DataIn(
             **inputs,
-            created_at=datetime.utcnow() if created_at is None else created_at,
+            timestamp,
         )
 
         with self.session() as s:
