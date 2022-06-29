@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from engine.controller import router as engine_router
+from ml_service.deployment.engine.controller import router as engine_router
 
 
 def creat_app():

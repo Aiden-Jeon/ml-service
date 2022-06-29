@@ -1,15 +1,16 @@
+from typing import Dict
 from pathlib import Path
 import json
 import yaml
 
 
-class InputPydanticTemplate:
+class InferenceInTemplate:
     def __init__(self) -> None:
         self.header = """from typing import List
 from pydantic import BaseModel, Field
 
 
-class ModelInputSchema(BaseModel):
+class InferenceIn(BaseModel):
 """
         self.contents = []
 
@@ -23,55 +24,38 @@ class ModelInputSchema(BaseModel):
         return contents
 
 
-class OutputPydanticTemplate:
-    def __init__(self) -> None:
-        self.header = """from pydantic import BaseModel, Field
-
-
-class ModelOutputSchema(BaseModel):
-"""
-        self.contents = []
-
-    def add(self, name: str, data_type: str) -> None:
-        data_type = "float" if data_type == "double" else data_type
-        self.contents += [f"    {name}: {data_type}"]
-
-    def dump(self):
-        contents = [self.header] + self.contents.copy()
-        contents = "\n".join(contents)
-        return contents
-
-
 class SchemaGenerator:
     def __init__(self, artifact_path: str) -> None:
-        self.engine_path = Path(__file__).parent / "engine"
         self.artifact_path = Path(artifact_path)
-        self.ml_model = ...
-        self.input_example = ...
+        self.domain_root_path = Path(__file__).parent
 
-    def _load_input_example(self) -> None:
+    def load_input_example(self) -> None:
         with open(self.artifact_path / "input_example.json", "r") as f:
             self.input_example = json.load(f)
 
-    def _load_ml_model(self) -> None:
+    def load_ml_model(self) -> Dict[str, str]:
         with open(self.artifact_path / "MLmodel", "r") as f:
-            self.ml_model = yaml.safe_load(f)
+            ml_model = yaml.safe_load(f)
+        return ml_model
 
-    def _make_pydantic(self) -> None:
-        input_schemas = self.ml_model["signature"]["inputs"]
+    def make_pydantic(self, ml_model: Dict[str, str]) -> InferenceInTemplate:
+        input_schemas = ml_model["signature"]["inputs"]
         input_schemas = yaml.full_load(input_schemas)
 
-        template = InputPydanticTemplate()
+        template = InferenceInTemplate()
         for input_schema in input_schemas:
             name = input_schema["name"]
             data_type = input_schema["type"]
             template.add(name, data_type)
+        return template
 
-        with open(self.engine_path / "schema.py", "w") as f:
+    def dump_engine_schema(self, template: InferenceInTemplate) -> None:
+        with open(self.domain_root_path / "engine" / "schema.py", "w") as f:
             print(template.dump())
             f.write(template.dump())
             f.write("\n")
 
     def load_schema(self) -> None:
-        self._load_ml_model()
-        self._make_pydantic()
+        ml_model = self.load_ml_model()
+        template = self.make_pydantic(ml_model)
+        self.dump_engine_schema(template)

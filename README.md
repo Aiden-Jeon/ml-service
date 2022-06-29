@@ -70,4 +70,4 @@ poetry run ml-service server --model-name "model" --artifact-path "mnt/artifacts
 
 ### 7. Check fastapi docs site
 
-[http://localhost:8000](http://localhost:8000)
+[http://localhost:8000/docs](http://localhost:8000/docs)

@@ -2,7 +2,7 @@ from typing import List
 from pydantic import BaseModel, Field
 
 
-class ModelInputSchema(BaseModel):
+class InferenceIn(BaseModel):
 
     feature_0: List[float]
     feature_1: List[float]
