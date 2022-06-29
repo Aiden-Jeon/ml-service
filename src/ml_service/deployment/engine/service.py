@@ -10,7 +10,7 @@ from ml_service.deployment.settings import settings
 MODEL_ARTIFACT_PATH = os.getenv("MODEL_ARTIFACT_PATH")
 
 
-class ModelService:
+class EngineService:
     def __init__(self) -> None:
         self.artifact_path = Path(settings.MODEL_ARTIFACT_PATH)
         self._model = ...
@@ -30,3 +30,6 @@ class ModelService:
         result = getattr(self._model, predict_method)(df)
         result_df = pd.DataFrame(result)
         return result_df
+
+
+engine = EngineService()
