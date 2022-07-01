@@ -9,7 +9,8 @@ def creat_app():
     app_ = FastAPI()
 
     db = Database()
-
+    db.create_database()
+    
     app_.include_router(engine_router)
     app_.include_router(buffer_router)
     return app_

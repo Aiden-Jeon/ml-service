@@ -14,13 +14,6 @@ class Database:
         db_url: str = str(settings.POSTGRES_URL),
     ) -> None:
         self.engine = create_engine(db_url)
-        try:
-            self.create_database()
-            self._ready = True
-        except OperationalError as e:
-            print(e)
-            self._ready = False
-
         self._session = orm.scoped_session(
             orm.sessionmaker(
                 autocommit=False,
@@ -37,7 +30,3 @@ class Database:
     @property
     def session(self) -> Session:
         return self._session
-
-    @property
-    def ready(self) -> bool:
-        return self._ready
