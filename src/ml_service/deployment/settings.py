@@ -15,8 +15,8 @@ class DataBaseSettings(BaseSettings):
     POSTGRES_HOST: str
     POSTGRES_PORT: str
     POSTGRES_DB: str
+    USE_BUFFER: bool
     POSTGRES_URL: Optional[str] = None
-
     @validator(
         "POSTGRES_URL",
         pre=True,

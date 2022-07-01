@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine, orm
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import OperationalError
 
 from ml_service.deployment.buffer.model import *
 
@@ -13,14 +12,15 @@ class Database:
         self,
         db_url: str = str(settings.POSTGRES_URL),
     ) -> None:
-        self.engine = create_engine(db_url)
-        self._session = orm.scoped_session(
-            orm.sessionmaker(
-                autocommit=False,
-                autoflush=False,
-                bind=self.engine,
-            ),
-        )
+        if settings.USE_BUFFER:
+            self.engine = create_engine(db_url)
+            self._session = orm.scoped_session(
+                orm.sessionmaker(
+                    autocommit=False,
+                    autoflush=False,
+                    bind=self.engine,
+                ),
+            )
 
     def create_database(self):
         print("create database")
