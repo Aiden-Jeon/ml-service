@@ -3,13 +3,12 @@ import pandas as pd
 
 from ml_service.deployment.buffer.schema import InferenceIn
 from ml_service.deployment.buffer.repository import BufferRepository
-from ml_service.deployment.engine.service import engine
+from ml_service.deployment.engine.service import MODEL_ENGINE
 
 
 
 class BufferService:
     def __init__(self) -> None:
-        self._engine = engine
         self._buffer_repo = BufferRepository()
 
     def infer_schema(self, inputs: InferenceIn) -> pd.DataFrame:
@@ -20,8 +19,8 @@ class BufferService:
     def inference(self, predict_method: str, inputs: InferenceIn):
         timestamp = datetime.utcnow()
         df = self.infer_schema(inputs)
-        self._buffer_repo.add_input(inputs, timestamp=timestamp)
+        self._buffer_repo.add_input(timestamp=timestamp, **inputs.dict())
 
-        result = getattr(self._engine, predict_method)(df)
+        result = MODEL_ENGINE.inference(df=df, predict_method=predict_method)
         result_df = pd.DataFrame(result)
         return result_df

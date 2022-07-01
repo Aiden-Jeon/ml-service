@@ -13,12 +13,15 @@ def _convert_data_type(data_type: str) -> str:
 class DataInTemplate:
     def __init__(self) -> None:
         self.header = """from datetime import datetime
+
+
 from sqlalchemy import Column, DateTime, Float, Integer, String, Text
+from ml_service.deployment.store import Base
 
 
-
-class DataIn:
+class DataIn(Base):
     __tablename__ = "input"
+    id = Column(Integer, primary_key=True)
     timestamp = Column(DateTime, default=datetime.utcnow)
 
 """
@@ -26,7 +29,7 @@ class DataIn:
 
     def add(self, name: str, data_type: str) -> None:
         data_type = _convert_data_type(data_type)
-        self.contents += [f"    {name}: Column({data_type})"]
+        self.contents += [f"    {name} = Column({data_type})"]
 
     def dump(self) -> str:
         contents = [self.header] + self.contents

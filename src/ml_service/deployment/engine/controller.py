@@ -1,12 +1,13 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
 from ml_service.deployment.engine.schema import InferenceIn
-from ml_service.deployment.engine.service import engine
+from ml_service.deployment.engine.service import MODEL_ENGINE
 
 router = APIRouter(prefix="/engine")
 
 
 @router.post("/{predict_method}")
 def inference(predict_method: str, inputs: InferenceIn):
-    result = engine.inference(predict_method, inputs)
+    df = MODEL_ENGINE.infer_schema(inputs=inputs)
+    result = MODEL_ENGINE.inference(df=df, predict_method=predict_method)
     return result

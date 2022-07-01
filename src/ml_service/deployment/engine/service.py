@@ -17,19 +17,23 @@ class EngineService:
         self._load_model()
 
     def _load_model(self) -> None:
-        with open(self.artifact_path / "model.pkl", "rb") as f:
+        model_path = self.artifact_path / "model.pkl"
+        print(f"Load model from: {model_path}")
+        with open(model_path, "rb") as f:
             self._model = cloudpickle.load(f)
 
     def infer_schema(self, inputs: InferenceIn) -> pd.DataFrame:
-        raw = {key: value for key, value in inputs.dict().items()}
+        raw = {}
+        for key, value in inputs.dict().items():
+            value = [value] if not isinstance(value, list) else value
+            raw[key] = value
         df = pd.DataFrame.from_dict(raw, orient="columns")
         return df
 
-    def inference(self, predict_method: str, inputs: InferenceIn):
-        df = self.infer_schema(inputs)
+    def inference(self, df: pd.DataFrame, predict_method: str):
         result = getattr(self._model, predict_method)(df)
         result_df = pd.DataFrame(result)
         return result_df
 
 
-engine = EngineService()
+MODEL_ENGINE = EngineService()

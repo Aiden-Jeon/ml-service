@@ -42,9 +42,9 @@ class SchemaGenerator:
             template.add(name, data_type)
         return template
 
-    def write_pydantic(self, template: InferenceInTemplate, domain: str, filename: str) -> None:
+    def write_pydantic(self, template: InferenceInTemplate, domain: str, filename: str, content: str ="list") -> None:
         with open(self.domain_root_path / domain / filename, "w") as f:
-            f.write(template.dump(content="list"))
+            f.write(template.dump(content=content))
             f.write("\n")
 
     def write_orm(self, template: DataInTemplate, domain: str, filename: str) -> None:
@@ -55,8 +55,8 @@ class SchemaGenerator:
     def load_schema(self) -> None:
         ml_model = self.load_ml_model()
         pydantic_template = self.make_pydantic(ml_model)
-        self.write_pydantic(pydantic_template, "engine", "schema.py")
-        self.write_pydantic(pydantic_template, "buffer", "schema.py")
+        self.write_pydantic(pydantic_template, "engine", "schema.py", "list")
+        self.write_pydantic(pydantic_template, "buffer", "schema.py", "single")
 
         orm_template = self.make_orm(ml_model)
         self.write_orm(orm_template, "buffer", "model.py")

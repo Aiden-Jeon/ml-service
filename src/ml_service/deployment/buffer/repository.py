@@ -1,6 +1,8 @@
 from datetime import datetime
 from typing import Any, Dict, Optional
 
+import pandas as pd
+
 from ml_service.deployment.store import Database
 from ml_service.deployment.buffer.model import DataIn
 
@@ -15,20 +17,20 @@ class BufferRepository:
 
     def add_input(
         self,
-        inputs: Dict[str, Any],
         timestamp: Optional[datetime],
+        **kwargs,
     ) -> DataIn:
         if not self.ready:
             raise NotImplementedError("db is not ready")
 
-        inputs = DataIn(
-            **inputs,
-            timestamp,
+        data_in = DataIn(
+            timestamp=timestamp,
+            **kwargs,
         )
 
         with self.session() as s:
-            s.add(inputs)
+            s.add(data_in)
             s.commit()
-            s.refresh(inputs)
+            s.refresh(data_in)
 
-        return inputs
+        return data_in
