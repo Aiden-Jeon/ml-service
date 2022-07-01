@@ -1,8 +1,8 @@
 from pathlib import Path
 import os
 import typer
-from .download import download_artifact, get_artifact_uri
-from ..deployment.schema_generator import SchemaGenerator
+from ml_service.cli.download import download_artifact, get_artifact_uri
+from ml_service.deployment.generator import SchemaGenerator
 
 app = typer.Typer(help="ml-service command line tool")
 SRC_PATH = Path(__file__).parents[1]
