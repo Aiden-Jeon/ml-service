@@ -15,7 +15,8 @@ DEPLOYMENT_PATH = SRC_PATH / "deployment"
 def sync(
     run_id: str = typer.Option(..., help="run_id in mlflow"),
     tracking_uri: str = typer.Option(
-        "http://localhost:5000", help="tracking uri to get mlflow artifacts",
+        "http://localhost:5000",
+        help="tracking uri to get mlflow artifacts",
     ),
     dest_path: str = typer.Option("mnt/artifacts", help="path to download artifacts"),
 ) -> None:
@@ -26,12 +27,19 @@ def sync(
 @app.command()
 def server(
     artifact_path: str = typer.Option(
-        "mnt/artifacts", help="path of artifact to run server",
+        "mnt/artifacts",
+        help="path of artifact to run server",
     ),
     model_name: str = typer.Option(..., help="name of model to deploy"),
+    use_buffer: bool = typer.Option(False, "--use-buffer", help="allow using buffer"),
 ) -> None:
     model_artifact_path = Path(artifact_path) / model_name
     generator = SchemaGenerator(model_artifact_path)
     generator.load_schema()
-    cmd = f"PYTHONPATH={DEPLOYMENT_PATH} MODEL_ARTIFACT_PATH={model_artifact_path} poetry run uvicorn main:app --reload"
+
+    cmd = [f"PYTHONPATH={DEPLOYMENT_PATH}", f"MODEL_ARTIFACT_PATH={model_artifact_path}"]
+    if use_buffer:
+        cmd += ["USE_BUFFER=true"]
+    cmd += ["poetry run uvicorn main:app --reload"]
+    cmd = " ".join(cmd)
     os.system(cmd)
