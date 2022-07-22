@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 
-from ml_service.deployment.settings import settings
-from ml_service.deployment.engine.controller import router as engine_router
 from ml_service.deployment.buffer.controller import router as buffer_router
+from ml_service.deployment.engine.controller import router as engine_router
+from ml_service.deployment.settings import settings
 from ml_service.deployment.store.db import Database
 
 

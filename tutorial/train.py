@@ -1,12 +1,11 @@
 import os
 
-import pandas as pd
-from sklearn.linear_model import LinearRegression
-from sklearn.datasets import make_regression
-from sklearn.model_selection import train_test_split
 import mlflow
+import pandas as pd
 from mlflow.models.signature import infer_signature
-
+from sklearn.datasets import make_regression
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
 
 MODEL_REGISTRY_URL = os.getenv("MODEL_REGISTRY_URL", "http://localhost:5000")
 mlflow.set_tracking_uri(MODEL_REGISTRY_URL)

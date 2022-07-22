@@ -14,8 +14,8 @@ class DataInTemplate:
     def __init__(self) -> None:
         self.header = """from datetime import datetime
 
-
 from sqlalchemy import Column, DateTime, Float, Integer, String, Text
+
 from ml_service.deployment.store import Base
 
 
@@ -40,8 +40,8 @@ class DataIn(Base):
 class DataOutTemplate:
     def __init__(self) -> None:
         self.header = """from datetime import datetime
-from sqlalchemy import Column, DateTime, Float, Integer, String, Text
 
+from sqlalchemy import Column, DateTime, Float, Integer, String, Text
 
 
 class DataOut:

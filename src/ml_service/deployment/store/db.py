@@ -2,7 +2,6 @@ from sqlalchemy import create_engine, orm
 from sqlalchemy.orm import Session
 
 from ml_service.deployment.buffer.model import *
-
 from ml_service.deployment.settings import settings
 from ml_service.deployment.store.base import Base
 
