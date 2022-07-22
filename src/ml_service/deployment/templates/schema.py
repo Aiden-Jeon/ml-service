@@ -1,6 +1,7 @@
 class InferenceInTemplate:
     def __init__(self) -> None:
         self.header = """from typing import List
+
 from pydantic import BaseModel
 
 
