@@ -10,7 +10,7 @@ class BufferRepository:
     def __init__(
         self,
     ) -> None:
-        db = Database()
+        self.db = Database()
 
     def add_input(
         self,
