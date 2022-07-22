@@ -12,3 +12,10 @@ run-mlflow:
 
 run-server:
 	PYTHONPATH=src/deployment/ poetry run uvicorn main:app --reload
+
+format:
+	poetry run black .
+	poetry run isort . --skip-gitignore --profile black
+
+lint:
+	PYTHONPATH=src/ poetry run pytest src/ --pylint --flake8 --ignore-glob=src/**/schema.py --ignore-glob=src/**/model.py
