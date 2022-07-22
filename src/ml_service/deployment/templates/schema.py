@@ -23,7 +23,7 @@ class InferenceIn(BaseModel):
         else:
             raise ValueError(
                 "Not valid content %s, supported content is  'list' and 'single'"
-                % content
+                % content,
             )
         contents = [self.header] + contents
         contents = "\n".join(contents)
