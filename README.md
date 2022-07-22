@@ -71,3 +71,28 @@ poetry run ml-service server --model-name "model" --artifact-path "mnt/artifacts
 ### 7. Check fastapi docs site
 
 [http://localhost:8000/docs](http://localhost:8000/docs)
+
+
+## After deployment
+
+### 1. Fastapi docs site
+
+Fastapi docs site looks like below:
+
+![fastapi_docs](assets/0.png)
+
+### 2. Check engine post
+
+![engine_post](assets/1.png)
+
+### 3. Write predict_method to use
+
+In this tutorial we use `predict`.
+
+![engine_post_param](assets/2.png)
+
+### 4. Execute
+
+After excute, you can get result as below:
+
+![excute_result](assets/3.png)

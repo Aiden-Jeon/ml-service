@@ -10,6 +10,7 @@ class DataIn(Base):
     id = Column(Integer, primary_key=True)
     timestamp = Column(DateTime, default=datetime.utcnow)
 
+
     feature_0 = Column(Float)
     feature_1 = Column(Float)
     feature_2 = Column(Float)
