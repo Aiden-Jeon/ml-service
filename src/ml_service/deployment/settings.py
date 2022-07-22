@@ -1,8 +1,8 @@
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from pydantic import BaseSettings, PostgresDsn, validator
 from dotenv import load_dotenv
+from pydantic import BaseSettings, PostgresDsn, validator
 
 
 class PathSettings(BaseSettings):
@@ -17,6 +17,7 @@ class DataBaseSettings(BaseSettings):
     POSTGRES_DB: str
     USE_BUFFER: bool
     POSTGRES_URL: Optional[str] = None
+
     @validator(
         "POSTGRES_URL",
         pre=True,

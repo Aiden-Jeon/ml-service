@@ -20,7 +20,10 @@ class InferenceIn(BaseModel):
         elif content == "single":
             contents = self.single_contents.copy()
         else:
-            raise ValueError("Not valid content %s, supported content is  'list' and 'single'" % data_type)
+            raise ValueError(
+                "Not valid content %s, supported content is  'list' and 'single'"
+                % content
+            )
         contents = [self.header] + contents
         contents = "\n".join(contents)
         return contents

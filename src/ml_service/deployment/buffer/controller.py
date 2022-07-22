@@ -7,6 +7,10 @@ router = APIRouter(prefix="/buffer")
 
 
 @router.post("/{predict_method}")
-def inference(predict_method: str, inputs: InferenceIn, buffer_service: BufferService = Depends(BufferService)):
+def inference(
+    predict_method: str,
+    inputs: InferenceIn,
+    buffer_service: BufferService = Depends(BufferService),
+):
     result = buffer_service.inference(predict_method, inputs)
     return result

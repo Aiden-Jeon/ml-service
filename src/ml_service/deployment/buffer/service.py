@@ -1,10 +1,10 @@
 from datetime import datetime
+
 import pandas as pd
 
-from ml_service.deployment.buffer.schema import InferenceIn
 from ml_service.deployment.buffer.repository import BufferRepository
+from ml_service.deployment.buffer.schema import InferenceIn
 from ml_service.deployment.engine.service import MODEL_ENGINE
-
 
 
 class BufferService:

@@ -1,9 +1,10 @@
-from typing import Dict
-from pathlib import Path
 import json
+from pathlib import Path
+from typing import Dict
+
 import yaml
 
-from ml_service.deployment.templates import InferenceInTemplate, DataInTemplate
+from ml_service.deployment.templates import DataInTemplate, InferenceInTemplate
 
 
 class SchemaGenerator:
@@ -42,7 +43,13 @@ class SchemaGenerator:
             template.add(name, data_type)
         return template
 
-    def write_pydantic(self, template: InferenceInTemplate, domain: str, filename: str, content: str ="list") -> None:
+    def write_pydantic(
+        self,
+        template: InferenceInTemplate,
+        domain: str,
+        filename: str,
+        content: str = "list",
+    ) -> None:
         with open(self.domain_root_path / domain / filename, "w") as f:
             f.write(template.dump(content=content))
             f.write("\n")

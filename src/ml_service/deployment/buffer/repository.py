@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from ml_service.deployment.settings import settings
-from ml_service.deployment.store import Database
 from ml_service.deployment.buffer.model import DataIn
 from ml_service.deployment.response_fail import BadRequest
+from ml_service.deployment.settings import settings
+from ml_service.deployment.store import Database
 
 
 class BufferRepository:
