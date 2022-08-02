@@ -14,9 +14,9 @@ Check more details in [Poetry Docs](https://python-poetry.org/docs/).
 
 To install rclone on Linux/macOS/BSD systems, run:
 
-    ```bash
-    curl https://rclone.org/install.sh | sudo bash
-    ```
+```bash
+curl https://rclone.org/install.sh | sudo bash
+```
 
 Check more details in [RClone Download](https://rclone.org/downloads/).
 
